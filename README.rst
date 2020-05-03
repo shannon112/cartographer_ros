@@ -37,6 +37,9 @@ Getting started
 .. _our Read the Docs site: https://google-cartographer-ros.readthedocs.io
 .. _creating an issue: https://github.com/googlecartographer/cartographer_ros/issues/new?labels=question
 
+Experiment based on 2012-04-06-11-15-29.bag  
+Avaliable on: https://projects.csail.mit.edu/stata/downloads.php  
+
 Contributing
 ============
 
