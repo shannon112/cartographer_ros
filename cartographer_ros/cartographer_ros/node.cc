@@ -42,6 +42,7 @@
 #include "cartographer_ros_msgs/StatusResponse.h"
 #include "glog/logging.h"
 #include "nav_msgs/Odometry.h"
+#include "geometry_msgs/PoseArray.h"
 #include "ros/serialization.h"
 #include "sensor_msgs/PointCloud2.h"
 #include "tf2_eigen/tf2_eigen.h"
@@ -101,6 +102,7 @@ Node::Node(
     carto::metrics::RegisterAllMetrics(metrics_registry_.get());
   }
 
+  //publisher
   submap_list_publisher_ =
       node_handle_.advertise<::cartographer_ros_msgs::SubmapList>(
           kSubmapListTopic, kLatestOnlyPublisherQueueSize);
@@ -113,6 +115,15 @@ Node::Node(
   constraint_list_publisher_ =
       node_handle_.advertise<::visualization_msgs::MarkerArray>(
           kConstraintListTopic, kLatestOnlyPublisherQueueSize);
+  scan_matched_point_cloud_publisher_ =
+      node_handle_.advertise<sensor_msgs::PointCloud2>(
+          kScanMatchedPointCloudTopic, kLatestOnlyPublisherQueueSize);
+
+  trajectory_pose_array_publisher_ =
+      node_handle_.advertise<::geometry_msgs::PoseArray>(
+          kTrajectoryPoseArrayTopic, kLatestOnlyPublisherQueueSize);
+
+  //service
   service_servers_.push_back(node_handle_.advertiseService(
       kSubmapQueryServiceName, &Node::HandleSubmapQuery, this));
   service_servers_.push_back(node_handle_.advertiseService(
@@ -128,13 +139,13 @@ Node::Node(
   service_servers_.push_back(node_handle_.advertiseService(
       kReadMetricsServiceName, &Node::HandleReadMetrics, this));
 
-  scan_matched_point_cloud_publisher_ =
-      node_handle_.advertise<sensor_msgs::PointCloud2>(
-          kScanMatchedPointCloudTopic, kLatestOnlyPublisherQueueSize);
-
+  //timer
   wall_timers_.push_back(node_handle_.createWallTimer(
       ::ros::WallDuration(node_options_.submap_publish_period_sec),
       &Node::PublishSubmapList, this));
+  wall_timers_.push_back(node_handle_.createWallTimer(
+      ::ros::WallDuration(node_options_.pose_publish_period_sec),
+      &Node::PublishPoseArray, this));
   if (node_options_.pose_publish_period_sec > 0) {
     publish_local_trajectory_data_timer_ = node_handle_.createTimer(
         ::ros::Duration(node_options_.pose_publish_period_sec),
@@ -183,6 +194,11 @@ bool Node::HandleTrajectoryQuery(
 void Node::PublishSubmapList(const ::ros::WallTimerEvent& unused_timer_event) {
   absl::MutexLock lock(&mutex_);
   submap_list_publisher_.publish(map_builder_bridge_.GetSubmapList());
+}
+
+void Node::PublishPoseArray(const ::ros::WallTimerEvent& unused_timer_event) {
+  absl::MutexLock lock(&mutex_);
+  trajectory_pose_array_publisher_.publish(map_builder_bridge_.GetPoseArrayList());
 }
 
 void Node::AddExtrapolator(const int trajectory_id,

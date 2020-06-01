@@ -44,6 +44,8 @@
 #undef DELETE
 #endif
 #include "visualization_msgs/MarkerArray.h"
+#include "geometry_msgs/PoseArray.h"
+#include "geometry_msgs/Pose.h"
 
 namespace cartographer_ros {
 
@@ -99,6 +101,7 @@ class MapBuilderBridge {
   visualization_msgs::MarkerArray GetTrajectoryNodeList();
   visualization_msgs::MarkerArray GetLandmarkPosesList();
   visualization_msgs::MarkerArray GetConstraintList();
+  geometry_msgs::PoseArray GetPoseArrayList();
 
   SensorBridge* sensor_bridge(int trajectory_id);
 

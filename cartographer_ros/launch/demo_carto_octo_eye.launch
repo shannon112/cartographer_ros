@@ -37,20 +37,18 @@
     </node>
 
     <!--3D point registering-->
-	<node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
+	<!--node pkg="octomap_server" type="octomap_server_node" name="octomap_server"-->
+	<!--node pkg="octomap_server" type="octomap_color_server_node" name="octomap_server">
 		<param name="resolution" value="0.05" />
-		<!-- fixed map frame (set to 'map' if SLAM or localization running!) -->
 		<param name="frame_id" type="string" value="map" />		
-		<!-- maximum range to integrate (speedup!) -->
 		<param name="sensor_model/max_range" value="5.0" />
-		<!-- data source to integrate (PointCloud2)  move_group/filtered_cloud -->
 		<remap from="cloud_in" to="camera/depth_registered/points" />
-		<!--remap from="cloud_in" to="/basecam/depth_registered/points" /-->	 
 		<param name="pointcloud_min_z" value="0.05" />
 		<param name="pointcloud_max_z" value="2.5" />
 		<param name="occupancy_min_z" value="0.05" />
 		<param name="occupancy_max_z" value="2.5" />
-	</node>
+	</node-->
+    <!--rosrun octomap_server point_cloud_stiching_node c_in:=/camera/depth_registered/points frame_id:=/map-->
 
     <node name="rviz" pkg="rviz" type="rviz" required="true"
         args="-d $(find cartographer_ros)/configuration_files/demo_2d.rviz" />

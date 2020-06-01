@@ -157,6 +157,7 @@ class Node {
   int AddTrajectory(const TrajectoryOptions& options);
   void LaunchSubscribers(const TrajectoryOptions& options, int trajectory_id);
   void PublishSubmapList(const ::ros::WallTimerEvent& timer_event);
+  void PublishPoseArray(const ::ros::WallTimerEvent& timer_event);
   void AddExtrapolator(int trajectory_id, const TrajectoryOptions& options);
   void AddSensorSamplers(int trajectory_id, const TrajectoryOptions& options);
   void PublishLocalTrajectoryData(const ::ros::TimerEvent& timer_event);
@@ -185,6 +186,7 @@ class Node {
 
   ::ros::NodeHandle node_handle_;
   ::ros::Publisher submap_list_publisher_;
+  ::ros::Publisher trajectory_pose_array_publisher_;
   ::ros::Publisher trajectory_node_list_publisher_;
   ::ros::Publisher landmark_poses_list_publisher_;
   ::ros::Publisher constraint_list_publisher_;

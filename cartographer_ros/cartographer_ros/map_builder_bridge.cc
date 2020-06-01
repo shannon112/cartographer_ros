@@ -383,6 +383,26 @@ visualization_msgs::MarkerArray MapBuilderBridge::GetTrajectoryNodeList() {
   return trajectory_node_list;
 }
 
+// the pose we get is related to cartographer's tracking frame
+geometry_msgs::PoseArray MapBuilderBridge::GetPoseArrayList() {
+  geometry_msgs::PoseArray pose_array;
+  pose_array.header.stamp = ros::Time::now();
+  pose_array.header.frame_id = "/map";
+  const auto node_poses = map_builder_->pose_graph()->GetTrajectoryNodePoses();
+  pose_array.poses.resize(node_poses.size());
+  //ROS_INFO("pose array size: %zu",node_poses.size());
+
+  int i = 0;
+  for (const auto& node_id_data : node_poses.trajectory(0)) {
+    if (!node_id_data.data.constant_pose_data.has_value()) {
+      continue;
+    }
+    pose_array.poses[i] = ToGeometryMsgPose(node_id_data.data.global_pose);
+    ++i;
+  }
+  return pose_array;
+}
+
 visualization_msgs::MarkerArray MapBuilderBridge::GetLandmarkPosesList() {
   visualization_msgs::MarkerArray landmark_poses_list;
   const std::map<std::string, Rigid3d> landmark_poses =
