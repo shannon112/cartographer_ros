@@ -1,40 +1,41 @@
+<!--
+roslaunch cartographer_ros demo_amirslam_mit.launch bag_filenames:=/home/shannon/Downloads/mit39-2012-04-06-11-28-12.bag 
+rosrun octomap_server submap3d_server_node cloud_in:=/camera/depth_registered/points frame_id:=/map
+rosrun octomap_server submap3d_visualizer_node frame_id:=/map
+-->
 <launch>
     <param name="/use_sim_time" value="true" />
 
     <!--Playing ROS bag w/ tf, must be together with others-->
     <arg name="bag_filenames"/>
-    <node name="playbag" pkg="rosbag" type="play" args="--clock $(arg bag_filenames) /tf:=/tf_rm" />
+    <node name="playbag" pkg="rosbag" type="play" args="--clock $(arg bag_filenames)" />
+    <node pkg="cartographer_ros" name="tf_static_keeper" type="tf_static_keeper.py" output="screen"/>
+    <!--param name="robot_description" command="rosrun xacro xacro.py '$(find scorpio_description)/robots/scorpio.urdf.xacro'" /-->
+
+    <!--Laser merger-->
+    <node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" output="screen">
+  		<param name="destination_frame" value="/base_link"/>
+  		<param name="cloud_destination_topic" value="/merged_cloud"/>
+  		<param name="scan_destination_topic" value="/scan_multi"/>
+      <param name="laserscan_topics" value ="/front_scan /back_scan" /> 
+  	</node>
 
     <!-- Launch Cartographer slam -->
-    <arg name="lua_filename" default="mit_stata_2d.lua"/>
+    <arg name="lua_filename" default="our_dataset_2d.lua"/>
     <node name="cartographer_node" pkg="cartographer_ros"
         type="cartographer_node" args="
             -configuration_directory $(find cartographer_ros)/configuration_files
             -configuration_basename $(arg lua_filename)"
         output="screen">
-        <remap from="scan" to="/base_scan" />
-        <remap from="odom"     to="/base_odometry/odom_footprint"/>
-        <remap from="imu"     to="/torso_lift_imu/data"/>
+        <remap from="scan" to="/scan_multi" />
+        <remap from="odom"     to="/mobile_base_controller/odom"/>
+        <!--remap from="imu"    to="/torso_lift_imu/data"/-->
     </node>
     <!--Launch cartographer grid map transformer-->
     <node name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
         type="cartographer_occupancy_grid_node" args="-resolution 0.05" output="screen">
     </node>
 
-    <!--Corrected odometry-->
-    <node name="odometry_add_frameid" pkg="cartographer_ros" type="odometry_add_frameid.py"/>
-
-    <!--Corrected tf odom to base_footprint-->
-    <node name="tf_remove_transform" pkg="cartographer_ros" type="tf_remove_transform.py"/>
-
-    <!--point cloud from depth map and rgb image-->
-    <node pkg="nodelet" type="nodelet" name="standalone_nodelet"  args="manager"/>
-    <node pkg="nodelet" type="nodelet" name="depth_image_proc" args="load depth_image_proc/point_cloud_xyzrgb standalone_nodelet" output="screen">
-        <remap from="rgb/camera_info"     to="/camera/rgb/camera_info"/>
-        <remap from="rgb/image_rect_color"     to="/camera/rgb/image_raw"/>
-        <remap from="depth_registered/image_rect"     to="/camera/depth/image_raw"/>
-        <remap from="depth_registered/points"     to="/camera/depth_registered/points"/>
-    </node>
 
     <!--3D point registering-->
 	<!--node pkg="octomap_server" type="octomap_server_node" name="octomap_server"-->
@@ -48,7 +49,6 @@
 		<param name="occupancy_min_z" value="0.05" />
 		<param name="occupancy_max_z" value="2.5" />
 	</node-->
-    <!--rosrun octomap_server point_cloud_stiching_node c_in:=/camera/depth_registered/points frame_id:=/map-->
 
     <node name="rviz" pkg="rviz" type="rviz" required="true"
         args="-d $(find cartographer_ros)/configuration_files/demo_2d.rviz" />
