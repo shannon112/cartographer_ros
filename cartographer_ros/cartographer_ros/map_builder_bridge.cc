@@ -491,11 +491,11 @@ visualization_msgs::MarkerArray MapBuilderBridge::GetConstraintList() {
       // Color mapping for submaps of various trajectories - add trajectory id
       // to ensure different starting colors. Also add a fixed offset of 25
       // to avoid having identical colors as trajectories.
-      // Rainbow color
+      // Rainbow color (constraint)
       color_constraint = ToMessage(
           cartographer::io::GetColor(constraint.submap_id.submap_index +
                                      constraint.submap_id.trajectory_id + 25));
-      // Bright red
+      // Bright red (residual)
       color_residual.a = 1.0;
       color_residual.r = 1.0;
     } 
@@ -505,7 +505,7 @@ visualization_msgs::MarkerArray MapBuilderBridge::GetConstraintList() {
           constraint.submap_id.trajectory_id) {
         constraint_marker = &constraint_inter_same_trajectory_marker;
         residual_marker = &residual_inter_same_trajectory_marker;
-        // Bright yellow
+        // Bright yellow (constraint same)
         color_constraint.a = 1.0;
         color_constraint.r = color_constraint.g = 1.0;
       } 
@@ -513,12 +513,12 @@ visualization_msgs::MarkerArray MapBuilderBridge::GetConstraintList() {
       else {
         constraint_marker = &constraint_inter_diff_trajectory_marker;
         residual_marker = &residual_inter_diff_trajectory_marker;
-        // Bright orange
+        // Bright orange (constraint&residual diff)
         color_constraint.a = 1.0;
         color_constraint.r = 1.0;
         color_constraint.g = 165. / 255.;
       }
-      // Bright cyan
+      // Bright cyan (residual same)
       color_residual.a = 1.0;
       color_residual.b = color_residual.g = 1.0;
     }
