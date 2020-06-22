@@ -422,7 +422,7 @@ visualization_msgs::MarkerArray MapBuilderBridge::GetConstraintList() {
   visualization_msgs::MarkerArray constraint_list;
   int marker_id = 0;
 
-  /**constraint_intra_marker**/.
+  /**constraint_intra_marker**/
   visualization_msgs::Marker constraint_intra_marker;
   constraint_intra_marker.id = marker_id++;
   constraint_intra_marker.ns = "Intra constraints";
@@ -432,7 +432,7 @@ visualization_msgs::MarkerArray MapBuilderBridge::GetConstraintList() {
   constraint_intra_marker.scale.x = kConstraintMarkerScale;
   constraint_intra_marker.pose.orientation.w = 1.0;
 
-  /**residual_intra_marker**/.
+  /**residual_intra_marker**/
   visualization_msgs::Marker residual_intra_marker = constraint_intra_marker;
   residual_intra_marker.id = marker_id++;
   residual_intra_marker.ns = "Intra residuals";
@@ -441,7 +441,7 @@ visualization_msgs::MarkerArray MapBuilderBridge::GetConstraintList() {
   // visible.
   residual_intra_marker.pose.position.z = 0.1;
 
-  /**constraint_inter_same_trajectory_marker**/.
+  /**constraint_inter_same_trajectory_marker**/
   visualization_msgs::Marker constraint_inter_same_trajectory_marker =
       constraint_intra_marker;
   constraint_inter_same_trajectory_marker.id = marker_id++;
@@ -449,7 +449,7 @@ visualization_msgs::MarkerArray MapBuilderBridge::GetConstraintList() {
       "Inter constraints, same trajectory";
   constraint_inter_same_trajectory_marker.pose.position.z = 0.1;
 
-  /**residual_inter_same_trajectory_marker**/.
+  /**residual_inter_same_trajectory_marker**/
   visualization_msgs::Marker residual_inter_same_trajectory_marker =
       constraint_intra_marker;
   residual_inter_same_trajectory_marker.id = marker_id++;
