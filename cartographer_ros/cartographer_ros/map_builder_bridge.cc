@@ -384,6 +384,7 @@ visualization_msgs::MarkerArray MapBuilderBridge::GetTrajectoryNodeList() {
 }
 
 // the pose we get is related to cartographer's tracking frame
+// treat as node_list last_nodeid == arraylen-1;  nodeid == array_item_index
 geometry_msgs::PoseArray MapBuilderBridge::GetPoseArrayList() {
   geometry_msgs::PoseArray pose_array;
   ros::Time latest_pose_stamp;
@@ -396,10 +397,12 @@ geometry_msgs::PoseArray MapBuilderBridge::GetPoseArrayList() {
     if (!node_id_data.data.constant_pose_data.has_value()) {
       continue;
     }
+    //ROS_INFO("nodeid %d",node_id_data.id.node_index);
     latest_pose_stamp = ToRos(node_id_data.data.constant_pose_data.value().time);
     pose_array.poses[i] = ToGeometryMsgPose(node_id_data.data.global_pose);
     ++i;
   }
+  //if(i>0){ROS_INFO("last nodeid %d",(--node_poses.trajectory(0).end())->id.node_index);}
 
   pose_array.header.stamp = latest_pose_stamp;
   pose_array.header.frame_id = "/map";
