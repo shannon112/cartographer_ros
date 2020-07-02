@@ -549,15 +549,15 @@ visualization_msgs::MarkerArray MapBuilderBridge::GetConstraintList() {
     const Rigid3d constraint_pose = submap_pose * constraint.pose.zbar_ij;
 
     //constraint line
-    constraint_marker->points.push_back(
+    constraint_marker->points.push_back( //line begin
         ToGeometryMsgPoint(submap_pose.translation()));
-    constraint_marker->points.push_back(
+    constraint_marker->points.push_back( //line end
         ToGeometryMsgPoint(constraint_pose.translation()));
 
     //residual line
-    residual_marker->points.push_back(
+    residual_marker->points.push_back( //line begin
         ToGeometryMsgPoint(constraint_pose.translation()));
-    residual_marker->points.push_back(
+    residual_marker->points.push_back( //line end
         ToGeometryMsgPoint(trajectory_node_pose.translation()));
   }
 

@@ -679,6 +679,21 @@ bool Node::HandleGetTrajectoryStates(
 bool Node::HandleFinishTrajectory(
     ::cartographer_ros_msgs::FinishTrajectory::Request& request,
     ::cartographer_ros_msgs::FinishTrajectory::Response& response) {
+
+  FinishAllTrajectories();
+  RunFinalOptimization();
+  //PublishSubmapList();
+  submap_list_publisher_.publish(map_builder_bridge_.GetSubmapList());
+  //PublishPoseArray();
+  trajectory_pose_array_publisher_.publish(map_builder_bridge_.GetPoseArrayList());
+  //PublishLocalTrajectoryData();
+  //PublishTrajectoryNodeList();
+  trajectory_node_list_publisher_.publish(map_builder_bridge_.GetTrajectoryNodeList());
+  //PublishLandmarkPosesList();
+  landmark_poses_list_publisher_.publish(map_builder_bridge_.GetLandmarkPosesList());
+  //PublishConstraintList();
+  constraint_list_publisher_.publish(map_builder_bridge_.GetConstraintList());
+
   absl::MutexLock lock(&mutex_);
   response.status = FinishTrajectoryUnderLock(request.trajectory_id);
   return true;

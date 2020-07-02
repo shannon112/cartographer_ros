@@ -1,5 +1,5 @@
 <!--
-roslaunch cartographer_ros demo_amirslam_mit.launch bag_filenames:=/home/shannon/Downloads/mit39-2012-04-06-11-28-12.bag 
+roslaunch cartographer_ros demo_amirslam_our.launch bag_filenames:=/home/shannon/Storage/iros_testing2_mini.bag
 rosrun octomap_server submap3d_server_node cloud_in:=/camera/depth_registered/points frame_id:=/map
 rosrun octomap_server submap3d_visualizer_node frame_id:=/map
 -->

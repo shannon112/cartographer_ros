@@ -6,7 +6,7 @@ roslaunch cartographer_ros demo_amirslam_mit.launch bag_filenames:=/home/shannon
 
     <!--Playing ROS bag w/ tf, must be together with others-->
     <arg name="bag_filenames"/>
-    <node name="playbag" pkg="rosbag" type="play" args="--clock $(arg bag_filenames) /tf:=/tf_rm" />
+    <node name="playbag" pkg="rosbag" type="play" args="--clock --rate=1 --keep-alive $(arg bag_filenames) /tf:=/tf_rm" />
 
     <!-- Launch Cartographer slam -->
     <arg name="lua_filename" default="mit_stata_2d.lua"/>
@@ -29,6 +29,7 @@ roslaunch cartographer_ros demo_amirslam_mit.launch bag_filenames:=/home/shannon
 
     <!--Corrected tf odom to base_footprint-->
     <node name="tf_remove_transform" pkg="cartographer_ros" type="tf_remove_transform.py"/>
+    <!--node name="echo_pose_array" pkg="cartographer_ros" type="echo_pose_array.py"/-->
 
     <!--point cloud from depth map and rgb image-->
     <node pkg="nodelet" type="nodelet" name="standalone_nodelet"  args="manager"/>
@@ -53,7 +54,7 @@ roslaunch cartographer_ros demo_amirslam_mit.launch bag_filenames:=/home/shannon
 	</node-->
     <!--rosrun octomap_server point_cloud_stiching_node c_in:=/camera/depth_registered/points frame_id:=/map-->
 
-    <node name="rviz" pkg="rviz" type="rviz" required="true"
+    <node name="rviz" pkg="rviz" type="rviz"
         args="-d $(find cartographer_ros)/configuration_files/demo_2d.rviz" />
 
 </launch>
