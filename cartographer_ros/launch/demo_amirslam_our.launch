@@ -2,13 +2,31 @@
 roslaunch cartographer_ros demo_amirslam_our.launch bag_filenames:=/home/shannon/Storage/iros_testing2_mini.bag
 rosrun octomap_server submap3d_server_node cloud_in:=/camera/depth_registered/points frame_id:=/map
 rosrun octomap_server submap3d_visualizer_node frame_id:=/map
+
+rosbag filter iros_2.bag iros_2_pc.bag "topic != '/velodyne_points' \
+and topic != '/basecam/accel/sample' \
+and topic != '/basecam/aligned_depth_to_color/image_raw' \
+and topic !=  '/basecam/color/camera_info' \
+and topic !=  '/basecam/color/image_rect_color' \
+and topic !=  '/basecam/depth/camera_info' \
+and topic !=  '/basecam/depth_registered/points' \
+and topic !=  '/basecam/gyro/sample' \
+and topic !=  '/camera/depth_registered/camera_info' \
+and topic !=  '/camera/depth_registered/hw_registered/image_rect_raw' \
+and topic !=  '/camera/rgb/camera_info' \
+and topic !=  '/imu' \
+and topic !=  '/imu/accel/sample' \
+and topic !=  '/imu/gyro/sample' \
+and topic !=  '/imu/magn/sample' \
+"
+
 -->
 <launch>
     <param name="/use_sim_time" value="true" />
 
     <!--Playing ROS bag w/ tf, must be together with others-->
     <arg name="bag_filenames"/>
-    <node name="playbag" pkg="rosbag" type="play" args="--clock $(arg bag_filenames)" />
+    <node name="playbag" pkg="rosbag" type="play" args="--clock -u 963 $(arg bag_filenames)" />
     <node pkg="cartographer_ros" name="tf_static_keeper" type="tf_static_keeper.py" output="screen"/>
     <!--param name="robot_description" command="rosrun xacro xacro.py '$(find scorpio_description)/robots/scorpio.urdf.xacro'" /-->
 
@@ -27,7 +45,9 @@ rosrun octomap_server submap3d_visualizer_node frame_id:=/map
             -configuration_directory $(find cartographer_ros)/configuration_files
             -configuration_basename $(arg lua_filename)"
         output="screen">
-        <remap from="scan" to="/scan_multi" />
+        <!--remap from="scan_1" to="/front_scan" /-->
+        <!--remap from="scan_2" to="/back_scan" /-->
+        <remap from="scan"    to="/scan_multi" />
         <remap from="odom"     to="/mobile_base_controller/odom"/>
         <!--remap from="imu"    to="/torso_lift_imu/data"/-->
     </node>

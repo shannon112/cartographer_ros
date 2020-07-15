@@ -1,7 +1,7 @@
 <launch>
       <!--Launch cartographer localization-->
       <arg name="map_filename"/>
-      <arg name="lua_filename_local" default="mit_stata_2d.lua"/>
+      <arg name="lua_filename_local" default="sghero_allcarto_real_3d.lua"/>
       <node name="cartographer" pkg="cartographer_ros"
           type="cartographer_node" args="
                 -configuration_directory $(find cartographer_ros)/configuration_files

@@ -680,6 +680,7 @@ bool Node::HandleFinishTrajectory(
     ::cartographer_ros_msgs::FinishTrajectory::Request& request,
     ::cartographer_ros_msgs::FinishTrajectory::Response& response) {
 
+  /*
   FinishAllTrajectories();
   RunFinalOptimization();
   //PublishSubmapList();
@@ -693,6 +694,7 @@ bool Node::HandleFinishTrajectory(
   landmark_poses_list_publisher_.publish(map_builder_bridge_.GetLandmarkPosesList());
   //PublishConstraintList();
   constraint_list_publisher_.publish(map_builder_bridge_.GetConstraintList());
+  */
 
   absl::MutexLock lock(&mutex_);
   response.status = FinishTrajectoryUnderLock(request.trajectory_id);
