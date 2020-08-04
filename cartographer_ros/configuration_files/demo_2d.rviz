@@ -25,7 +25,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: AMIR-PC-Map
+    SyncSource: ""
 Toolbars:
   toolButtonStyle: 2
 Visualization Manager:
@@ -54,125 +54,11 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        arm_base_link:
-          Value: true
-        axis1_link:
-          Value: true
-        axis2_link:
-          Value: true
-        axis3_link:
-          Value: true
-        axis4_link:
-          Value: true
-        axis5_link:
-          Value: true
-        axis6_link:
-          Value: true
-        back_hokuyo_link:
-          Value: true
-        back_left_wheel:
-          Value: true
-        back_right_wheel:
-          Value: true
-        base_footprint:
-          Value: true
-        base_imu_link:
-          Value: true
-        base_link:
-          Value: true
-        basecam_accel_optical_frame:
-          Value: true
-        basecam_aligned_depth_to_color_frame:
-          Value: true
-        basecam_aligned_depth_to_infra1_frame:
-          Value: true
-        basecam_aligned_depth_to_infra2_frame:
-          Value: true
-        basecam_color_frame:
-          Value: true
-        basecam_color_optical_frame:
-          Value: true
-        basecam_depth_frame:
-          Value: true
-        basecam_depth_optical_frame:
-          Value: true
-        basecam_gyro_optical_frame:
-          Value: true
-        basecam_infra1_frame:
-          Value: true
-        basecam_infra1_optical_frame:
-          Value: true
-        basecam_infra2_frame:
-          Value: true
-        basecam_infra2_optical_frame:
-          Value: true
-        basecam_left_ir_frame:
-          Value: true
-        basecam_left_ir_optical_frame:
-          Value: true
-        basecam_link:
-          Value: true
-        basecam_right_ir_frame:
-          Value: true
-        basecam_right_ir_optical_frame:
-          Value: true
-        camera_depth_frame:
-          Value: true
-        camera_depth_optical_frame:
-          Value: true
-        camera_imu_frame:
-          Value: true
-        camera_link:
-          Value: true
-        camera_rgb_frame:
-          Value: true
-        camera_rgb_optical_frame:
-          Value: true
-        eef_link:
-          Value: true
-        front_hokuyo_link:
-          Value: true
-        front_left_wheel:
-          Value: true
-        front_right_wheel:
-          Value: true
-        gripper_top_edge_link:
-          Value: true
-        left_inner_finger:
-          Value: true
-        left_inner_finger_pad:
-          Value: true
-        left_inner_knuckle:
-          Value: true
-        left_outer_finger:
-          Value: true
-        left_outer_knuckle:
-          Value: true
-        left_wheel:
-          Value: true
         map:
           Value: true
-        odom:
+        map_3d:
           Value: true
-        right_inner_finger:
-          Value: true
-        right_inner_finger_pad:
-          Value: true
-        right_inner_knuckle:
-          Value: true
-        right_outer_finger:
-          Value: true
-        right_outer_knuckle:
-          Value: true
-        right_wheel:
-          Value: true
-        robotiq_arg2f_base_link:
-          Value: true
-        surface_link:
-          Value: true
-        velodyne:
-          Value: true
-        vlaser_link:
+        map_oct:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -181,93 +67,10 @@ Visualization Manager:
       Show Names: false
       Tree:
         map:
-          odom:
-            base_footprint:
-              base_imu_link:
-                {}
-              base_link:
-                back_hokuyo_link:
-                  {}
-                back_left_wheel:
-                  {}
-                back_right_wheel:
-                  {}
-                basecam_link:
-                  basecam_aligned_depth_to_color_frame:
-                    {}
-                  basecam_aligned_depth_to_infra1_frame:
-                    basecam_infra1_optical_frame:
-                      {}
-                  basecam_aligned_depth_to_infra2_frame:
-                    basecam_infra2_optical_frame:
-                      {}
-                  basecam_color_frame:
-                    basecam_color_optical_frame:
-                      {}
-                  basecam_depth_frame:
-                    basecam_depth_optical_frame:
-                      {}
-                    basecam_left_ir_frame:
-                      basecam_left_ir_optical_frame:
-                        {}
-                    basecam_right_ir_frame:
-                      basecam_right_ir_optical_frame:
-                        {}
-                  basecam_infra1_frame:
-                    {}
-                  basecam_infra2_frame:
-                    {}
-                  camera_imu_frame:
-                    basecam_accel_optical_frame:
-                      {}
-                    basecam_gyro_optical_frame:
-                      {}
-                front_hokuyo_link:
-                  {}
-                front_left_wheel:
-                  {}
-                front_right_wheel:
-                  {}
-                left_wheel:
-                  {}
-                right_wheel:
-                  {}
-                surface_link:
-                  arm_base_link:
-                    axis1_link:
-                      axis2_link:
-                        axis3_link:
-                          axis4_link:
-                            axis5_link:
-                              axis6_link:
-                                eef_link:
-                                  robotiq_arg2f_base_link:
-                                    gripper_top_edge_link:
-                                      camera_link:
-                                        camera_depth_frame:
-                                          camera_depth_optical_frame:
-                                            {}
-                                        camera_rgb_frame:
-                                          camera_rgb_optical_frame:
-                                            {}
-                                    left_inner_knuckle:
-                                      {}
-                                    left_outer_knuckle:
-                                      left_outer_finger:
-                                        left_inner_finger:
-                                          left_inner_finger_pad:
-                                            {}
-                                    right_inner_knuckle:
-                                      {}
-                                    right_outer_knuckle:
-                                      right_outer_finger:
-                                        right_inner_finger:
-                                          right_inner_finger_pad:
-                                            {}
-                  velodyne:
-                    {}
-                vlaser_link:
-                  {}
+          map_3d:
+            {}
+          map_oct:
+            {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -336,14 +139,14 @@ Visualization Manager:
       Unreliable: false
       Value: true
     - Class: octomap_rviz_plugin/ColorOccupancyGrid
-      Enabled: false
+      Enabled: true
       Max. Height Display: 3.40282347e+38
       Max. Octree Depth: 16
       Min. Height Display: -3.40282347e+38
       Name: ColorOccupancyGrid
       Octomap Topic: /octomap_binary
       Queue Size: 5
-      Value: false
+      Value: true
       Voxel Alpha: 1
       Voxel Coloring: Z-Axis
       Voxel Rendering: Occupied Voxels
@@ -358,7 +161,12 @@ Visualization Manager:
         All: true
         All Submap Pose Markers: true
         Trajectory 0:
-          0.2: true
+          0.180: true
+          1.180: true
+          2.180: true
+          3.180: true
+          4.180: true
+          5.180: true
           Submap Pose Markers: true
           Value: true
       Topic: /submap_list
@@ -472,25 +280,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 27.586174
+      Distance: 18.7992058
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 1.58747768
-        Y: 6.56205034
+        X: 0.773593426
+        Y: 2.08772159
         Z: 1.73480657e-05
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.839796543
+      Pitch: 1.56979632
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 3.18827581
+      Yaw: 3.12327504
     Saved: ~
 Window Geometry:
   Displays:
